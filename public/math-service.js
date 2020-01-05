@@ -97,7 +97,7 @@ const evaluateOptimalBoatAngle = () => {
             bestAngle = tempAngle;
         }
 
-        historyAngles.push(bestAngle*180/Math.PI);
+        historyAngles.push((bestAngle*180/Math.PI).toFixed(2));
         historyDistance.push(bestDistance);
         iter++;
     }
