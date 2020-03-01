@@ -31,20 +31,18 @@ const evaluateBoatResultVector = (initialAngle) => {
 //   czas trwania podróży (docelowo w sekundach)
 //   odległość od punktu celu
 const evaluateBoatTripResults = (initialAngle) => {
-  const {angle, length} = evaluateBoatResultVector(initialAngle);
-  const betaAngle = Math.abs((Math.PI / 2) - angle);
+  const {x, y, length} = evaluateBoatResultVector(initialAngle);
   const {destinationLocation, riverWidth} = getParams();
 
-  let resultLocation = riverWidth * Math.tan(betaAngle);
-  if (angle < Math.PI / 2) {
-    resultLocation = -resultLocation;
-  }
+  // z tw Talesa
+  const resultLocation = x * riverWidth / y;
 
-  const tripLength = riverWidth / Math.cos(betaAngle);
+  // z tw Pitagorasa
+  const tripLength = Math.sqrt(resultLocation * resultLocation + riverWidth * riverWidth);
 
   return ({
     location: resultLocation,
-    duration: Math.abs(tripLength / length),
+    duration: tripLength / length,
     distance: Math.abs(resultLocation - destinationLocation),
   });
 };
