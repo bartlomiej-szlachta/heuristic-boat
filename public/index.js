@@ -239,16 +239,13 @@ const startBoatAnimations = () => {
     })
   }
   let boatFinalDestinations = mapAnglesToDestinations(evaluateOptimalBoatAngle().historyAngles);
-  const { historyAngles, historyDistance, optimalAngle, optimalDistance } = evaluateOptimalBoatAngle();
+  const { historyAngles, optimalAngle, optimalDistance } = evaluateOptimalBoatAngle();
   const boat = document.getElementById('boat');
 
   const numberOfIterations = getParams().iterations;
 
   let i = 0;
   let nextTimeout = 500 // 0.5s
-  const riverMiddlePoint = document.querySelector('.river').clientWidth / 2;
-  let destinationPointOffsetLeft = document.getElementById("destinationPoint").style.left;
-  destinationPointOffsetLeft = parseFloat(destinationPointOffsetLeft.slice(0, destinationPointOffsetLeft.length - 2));
   const destinationLocationRange = 40;
   const riverWidth = document.querySelector('.river').clientWidth;
   const oneDestinationStepInPx = riverWidth / destinationLocationRange;
@@ -256,16 +253,7 @@ const startBoatAnimations = () => {
   function runBoatAnimations() {
     wasAlgorithmFired = setTimeout(() => {
       let animationDuration = parseFloat(boatFinalDestinations[i].duration.toFixed(2));
-      let boatEndPointOffset = boatFinalDestinations[i].location * oneDestinationStepInPx;
-      let boatEndPoint
-      if (boatFinalDestinations[i].location < 0) {
-        boatEndPoint = riverMiddlePoint - destinationPointOffsetLeft - 16 //// - 16 to include the half of boat width
-        boatEndPoint = -boatEndPoint;
-      }
-      else {
-        boatEndPoint = destinationPointOffsetLeft - riverMiddlePoint + 16; // + 16 to include the half of boat width
-      }
-      boatEndPoint += boatEndPointOffset;
+      let boatEndPoint = boatFinalDestinations[i].location * oneDestinationStepInPx;
 
       let angle = parseFloat(historyAngles[i]);
       let roateBoat;
@@ -308,7 +296,7 @@ const drawBoatVector = () => {
   const boatSpeed = getParams().boatSpeed;
 
   arrowLength = boatSpeed*15;
- 
+
   const river = document.querySelector('.river');
   const riverWidth = river.clientWidth;
   const boatVector = document.createElement('img');
