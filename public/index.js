@@ -55,8 +55,8 @@ const drawRiver = (riverWidth) => {
   for (let i = 0; i < riverWidth; i++) {
     let wave = document.createElement('div');
     wave.classList.add('wave');
-    wave.style.top = waveOffsetTop + "px";
-    let newWaveColor = "rgb(" + initialWaveColorR + ", " + initialWaveColorG + ", " + initialWaveColorB + ")";
+    wave.style.top = waveOffsetTop + 'px';
+    let newWaveColor = 'rgb(' + initialWaveColorR + ', ' + initialWaveColorG + ', ' + initialWaveColorB + ')';
     wave.style.backgroundColor = newWaveColor;
     wave.style.boxShadow = `0px 0px ${newWaveColor}, 40px 0px ${newWaveColor}, 80px 0px ${newWaveColor}, 120px 0px ${newWaveColor},
      160px 0px ${newWaveColor}, 200px 0px ${newWaveColor}, 240px 0px ${newWaveColor}, 280px 0px ${newWaveColor}, 320px 0px ${newWaveColor},
@@ -88,24 +88,24 @@ const drawRiver = (riverWidth) => {
   drawBoatVector();
   drawDestinationPoint();
   updateRiverSpeedAnimation();
-}
+};
 
 const drawBoat = () => {
   const river = document.querySelector('.river');
   const riverWidth = river.clientWidth;
   const boat = document.createElement('div');
-  boat.id = "boat"
+  boat.id = 'boat';
 
-  boat.style.height = 32 + "px";
-  boat.style.width = 32 + "px";
+  boat.style.height = 32 + 'px';
+  boat.style.width = 32 + 'px';
   boat.style.backgroundImage = 'url("assets/sailboat32.png")';
-  boat.style.position = "absolute";
-  boat.style.left = (riverWidth / 2) - 16 + "px";
+  boat.style.position = 'absolute';
+  boat.style.left = (riverWidth / 2) - 16 + 'px';
   boat.style.bottom = 0;
   boat.style.zIndex = 2;
   river.appendChild(boat);
   updateBoatAngle();
-}
+};
 
 const drawDestinationPoint = point => {
   if (!point) {
@@ -116,7 +116,7 @@ const drawDestinationPoint = point => {
   const river = document.querySelector('.river');
   const riverWidth = river.clientWidth;
   const destinationPoint = document.createElement('div');
-  destinationPoint.id = "destinationPoint";
+  destinationPoint.id = 'destinationPoint';
   const existingDestinationPoint = document.getElementById('destinationPoint');
 
   if (existingDestinationPoint) {
@@ -139,15 +139,15 @@ const drawDestinationPoint = point => {
 
   const flagOffsetLeft = stepsMap.get(point.toString());
 
-  destinationPoint.style.height = flagSize + "px";
-  destinationPoint.style.width = flagSize + "px";
-  destinationPoint.style.position = "absolute";
+  destinationPoint.style.height = flagSize + 'px';
+  destinationPoint.style.width = flagSize + 'px';
+  destinationPoint.style.position = 'absolute';
   destinationPoint.style.backgroundImage = 'url("assets/flag.png")';
-  destinationPoint.style.left = flagOffsetLeft + "px";
+  destinationPoint.style.left = flagOffsetLeft + 'px';
 
   const flagContainer = document.getElementById('flag-container');
   flagContainer.appendChild(destinationPoint);
-}
+};
 
 const updateRiverSpeedAnimation = value => {
   if (!value) {
@@ -162,10 +162,9 @@ const updateRiverSpeedAnimation = value => {
     let key = i.toFixed(1);
 
     if (i === 0) {
-      animationDurationSpeedMap.set(key, "0s");
-    }
-    else {
-      animationDurationSpeedMap.set(key, theSlowestDuration.toFixed(1) + "s");
+      animationDurationSpeedMap.set(key, '0s');
+    } else {
+      animationDurationSpeedMap.set(key, theSlowestDuration.toFixed(1) + 's');
     }
     theSlowestDuration -= .4;
     theSlowestDuration.toFixed(1);
@@ -177,7 +176,7 @@ const updateRiverSpeedAnimation = value => {
     wave.style.animationDuration = speedToAnimationDuration;
   });
   updateRiverSpeedArrowWidth();
-}
+};
 
 const updateBoatAngle = angle => {
   if (!angle) {
@@ -185,9 +184,9 @@ const updateBoatAngle = angle => {
   }
   const boat = document.getElementById('boat');
   parseInt(angle) < 90 ?
-    boat.style.transform = "scale(-1, 1) " + `rotate(-${angle}deg)` : boat.style.transform = "scale(-1, -1) " + `rotate(${angle}deg)`;
-    //drawBoatVector();
-}
+    boat.style.transform = 'scale(-1, 1) ' + `rotate(-${angle}deg)` : boat.style.transform = 'scale(-1, -1) ' + `rotate(${angle}deg)`;
+  //drawBoatVector();
+};
 
 const updateRiverSpeedArrowWidth = speed => {
   if (!speed) {
@@ -195,13 +194,13 @@ const updateRiverSpeedArrowWidth = speed => {
     speed = riverSpeed;
   }
   const arrow = document.getElementById('river-speed-vector');
-  arrow.style.width = speed * 15 + "px" ;
-  }
+  arrow.style.width = speed * 15 + 'px';
+};
 const initRiver = () => {
   const params = getParams();
   const riverWidth = params.riverWidth;
   drawRiver(riverWidth);
-}
+};
 
 window.addEventListener('load', () => {
   initRiver();
@@ -228,15 +227,15 @@ window.addEventListener('load', () => {
 });
 
 const startBoatAnimations = () => {
-  if(wasAlgorithmFired) {
+  if (wasAlgorithmFired) {
     clearTimeout(wasAlgorithmFired);
   }
 
   const previousDestinationPoints = document.querySelectorAll('.destination-point-of-iteration');
   if (previousDestinationPoints.length) {
     previousDestinationPoints.forEach(element => {
-      element.remove()
-    })
+      element.remove();
+    });
   }
   let boatFinalDestinations = mapAnglesToDestinations(evaluateOptimalBoatAngle().historyAngles);
   const { historyAngles, optimalAngle, optimalDistance } = evaluateOptimalBoatAngle();
@@ -245,7 +244,7 @@ const startBoatAnimations = () => {
   const numberOfIterations = getParams().iterations;
 
   let i = 0;
-  let nextTimeout = 500 // 0.5s
+  let nextTimeout = 500; // 0.5s
   const destinationLocationRange = 40;
   const riverWidth = document.querySelector('.river').clientWidth;
   const oneDestinationStepInPx = riverWidth / destinationLocationRange;
@@ -258,67 +257,67 @@ const startBoatAnimations = () => {
       let angle = parseFloat(historyAngles[i]);
       let roateBoat;
       parseInt(angle) < 90 ?
-      roateBoat = "scale(-1, 1) " + `rotate(-${angle}deg)` : roateBoat = "scale(-1, -1) " + `rotate(${angle}deg)`;
+        roateBoat = 'scale(-1, 1) ' + `rotate(-${angle}deg)` : roateBoat = 'scale(-1, -1) ' + `rotate(${angle}deg)`;
       boat.animate([
         { transform: 'translate3d(0,0,0) ' + roateBoat },
-        { transform: `translate3d(${boatEndPoint.toFixed(2)}px, -288px, 0)` + roateBoat }
+        { transform: `translate3d(${boatEndPoint.toFixed(2)}px, -288px, 0)` + roateBoat },
       ], {
         duration: animationDuration * 1000,
-        iterations: 1
-      })
+        iterations: 1,
+      });
       nextTimeout = animationDuration * 1000;
       drawBoatEndPoint(boatEndPoint, i);
       i++;
       if (i < numberOfIterations) {
         runBoatAnimations();
+      } else {
+        document.getElementById('results').innerHTML = '';
+        document.getElementById('results').innerHTML = '<h1 style=\'margin-top: 16px; text-align:center; text-transform: uppercase; color: red \'>Results</h1> ' + `<p>Optimal distance: <span style='color: red;'>${optimalDistance} meters, </span><br> Optimal angle: <span style='color: red'>${optimalAngle} degree</span></p>`;
       }
-      else {
-        document.getElementById('results').innerHTML = ""
-        document.getElementById('results').innerHTML = "<h1 style='margin-top: 16px; text-align:center; text-transform: uppercase; color: red '>Results</h1> " + `<p>Optimal distance: <span style='color: red;'>${optimalDistance} meters, </span><br> Optimal angle: <span style='color: red'>${optimalAngle} degree</span></p>`;
-      }
-    }, nextTimeout)
+    }, nextTimeout);
   }
+
   runBoatAnimations();
-}
+};
 
 const drawBoatEndPoint = (point, i) => {
   const riverMiddlePoint = document.querySelector('.river').clientWidth / 2;
   const flagContainer = document.getElementById('flag-container');
   const destinationPointOfIteration = document.createElement('div');
   destinationPointOfIteration.classList.add('destination-point-of-iteration');
-  destinationPointOfIteration.style.left = riverMiddlePoint + point - 16 + "px";
+  destinationPointOfIteration.style.left = riverMiddlePoint + point - 16 + 'px';
   destinationPointOfIteration.innerHTML = ++i;
   flagContainer.appendChild(destinationPointOfIteration);
-}
+};
 
 const drawBoatVector = () => {
   let arrowLength;
   const boatSpeed = getParams().boatSpeed;
 
-  arrowLength = boatSpeed*15;
+  arrowLength = boatSpeed * 15;
 
   const river = document.querySelector('.river');
   const riverWidth = river.clientWidth;
   const boatVector = document.createElement('img');
-  boatVector.src = "assets/arrow.png"
-  boatVector.id = "boat-vector";
-  boatVector.classList.add = "boat-vector";
-  boatVector.style.height = 32 + "px";
-  boatVector.style.left = (riverWidth / 2) - 4 + "px";
-  boatVector.style.width = arrowLength + "px";
-  boatVector.style.backgroundRepeat = "no-repeat";
-  boatVector.style.paddingLeft = "32px";
+  boatVector.src = 'assets/arrow.png';
+  boatVector.id = 'boat-vector';
+  boatVector.classList.add = 'boat-vector';
+  boatVector.style.height = 32 + 'px';
+  boatVector.style.left = (riverWidth / 2) - 4 + 'px';
+  boatVector.style.width = arrowLength + 'px';
+  boatVector.style.backgroundRepeat = 'no-repeat';
+  boatVector.style.paddingLeft = '32px';
   boatVector.style.bottom = 0;
   boatVector.style.zIndex = 1;
   boat.appendChild(boatVector);
-}
+};
 
 const updateVectorLength = boatSpeed => {
   let arrowLength;
   arrowLength = boatSpeed * 15;
   const boatVector = document.getElementById('boat-vector');
-  boatVector.style.width = arrowLength + "px";
-}
+  boatVector.style.width = arrowLength + 'px';
+};
 
 window.addEventListener('resize', () => {
   initRiver();
